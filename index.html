@@ -1,654 +1,216 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Horary Astrology — Méthode Lilly–Frawley</title>
-<meta name="description" content="Consultations en astrologie horary traditionnelle. Méthode Lilly–Frawley. Une réponse précise à votre question.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --gold:#b5936b;--gold-light:#d4b896;--cream:#faf8f4;--ink:#1a1814;--muted:#6b6560;
-  --border:#e8e2d8;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost',sans-serif;
-}
-html{scroll-behavior:smooth}
-body{font-family:var(--sans);color:var(--ink);background:var(--cream);font-weight:300;font-size:15px;line-height:1.7}
-
-/* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 4rem;border-bottom:0.5px solid var(--border);position:sticky;top:0;background:var(--cream);z-index:100}
-.logo{font-family:var(--serif);font-size:1.1rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);text-decoration:none}
-.logo span{color:var(--gold)}
-.nav-links{display:flex;gap:2.5rem}
-.nav-links a{text-decoration:none;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s}
-.nav-links a:hover{color:var(--gold)}
-.lang-toggle{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;border:0.5px solid var(--border);padding:4px 10px;background:none;transition:all .2s}
-.lang-toggle:hover{border-color:var(--gold);color:var(--gold)}
-
-/* HERO */
-.hero{display:grid;grid-template-columns:1fr 1fr;min-height:85vh;align-items:center}
-.hero-text{padding:5rem 4rem}
-.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
-.hero h1{font-family:var(--serif);font-size:3.8rem;font-weight:300;line-height:1.1;margin-bottom:1.5rem}
-.hero h1 em{font-style:italic;color:var(--muted)}
-.hero p{color:var(--muted);max-width:420px;margin-bottom:2.5rem;font-size:14px;line-height:1.8}
-.btn-primary{display:inline-block;padding:12px 32px;background:var(--gold);color:#fff;text-decoration:none;font-size:12px;letter-spacing:.15em;text-transform:uppercase;transition:background .2s;cursor:pointer;border:none}
-.btn-primary:hover{background:#9e7d57}
-.btn-outline{display:inline-block;padding:12px 32px;border:0.5px solid var(--ink);color:var(--ink);text-decoration:none;font-size:12px;letter-spacing:.15em;text-transform:uppercase;transition:all .2s;cursor:pointer;margin-left:1rem;background:none}
-.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
-.hero-visual{height:85vh;display:flex;align-items:center;justify-content:center;border-left:0.5px solid var(--border);position:relative;overflow:hidden}
-.wheel-container{position:relative;width:380px;height:380px}
-.wheel-container svg{width:100%;height:100%}
-
-/* SECTIONS */
-section{padding:6rem 4rem}
-.section-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem}
-.section-title{font-family:var(--serif);font-size:2.4rem;font-weight:300;line-height:1.2;margin-bottom:1rem}
-.section-sub{color:var(--muted);font-size:14px;max-width:540px;line-height:1.8;margin-bottom:3rem}
-.divider{height:0.5px;background:var(--border)}
-
-/* METHOD */
-.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
-.method-detail{padding:2.5rem;border:0.5px solid var(--border);background:#fff}
-.method-detail + .method-detail{margin-top:1.5rem}
-.method-detail h3{font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:.75rem}
-.method-detail p{color:var(--muted);font-size:13px;line-height:1.8}
-
-/* QUESTIONS */
-.questions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
-.q-card{background:var(--cream);padding:2rem;transition:background .2s}
-.q-card:hover{background:#fff}
-.q-icon{font-size:24px;color:var(--gold);margin-bottom:.75rem}
-.q-card h3{font-family:var(--serif);font-size:1.15rem;font-weight:400;margin-bottom:.5rem}
-.q-card p{color:var(--muted);font-size:13px;line-height:1.7}
-
-/* PRICING */
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
-.price-card{padding:2.5rem;border:0.5px solid var(--border);background:#fff;position:relative}
-.price-card.featured{border-color:var(--gold)}
-.price-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--gold);color:#fff;font-size:10px;letter-spacing:.15em;text-transform:uppercase;padding:3px 14px;white-space:nowrap}
-.price-name{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
-.price-amount{font-family:var(--serif);font-size:2.2rem;font-weight:300;margin-bottom:.25rem}
-.price-amount span{font-size:1rem;font-family:var(--sans);color:var(--muted)}
-.price-desc{color:var(--muted);font-size:13px;margin:1rem 0 1.5rem;line-height:1.7;min-height:60px}
-.price-features{list-style:none;margin-bottom:2rem}
-.price-features li{font-size:13px;padding:6px 0;border-bottom:0.5px solid var(--border);color:var(--muted);display:flex;align-items:center;gap:8px}
-.price-features li i{color:var(--gold)}
-
-/* ABOUT */
-.about-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:6rem;align-items:center}
-.about-photo{width:100%;height:400px;object-fit:cover}
-.about-photo-placeholder{width:100%;height:400px;background:linear-gradient(135deg,#e8e2d8 0%,#d4c9b7 100%);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:5rem;color:var(--gold-light)}
-.about-text p{color:var(--muted);font-size:14px;line-height:1.9;margin-bottom:1rem}
-
-/* TESTIMONIALS */
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
-.testi-card{border-left:2px solid var(--gold);padding-left:1.5rem}
-.testi-quote{font-family:var(--serif);font-style:italic;font-size:1.05rem;line-height:1.7;margin-bottom:1rem}
-.testi-author{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-
-/* FAQ */
-.faq-list{margin-top:2rem;max-width:680px}
-.faq-item{border-bottom:0.5px solid var(--border);padding:1.25rem 0;cursor:pointer}
-.faq-q{display:flex;justify-content:space-between;align-items:center;font-size:14px}
-.faq-q i{color:var(--gold);transition:transform .2s}
-.faq-a{font-size:13px;color:var(--muted);line-height:1.8;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s}
-.faq-item.open .faq-a{max-height:200px;padding-top:.75rem}
-.faq-item.open .faq-q i{transform:rotate(45deg)}
-
-/* BLOG */
-.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
-.blog-card{cursor:pointer;text-decoration:none;color:inherit;display:block}
-.blog-card:hover .blog-title{color:var(--gold)}
-.blog-img{height:220px;object-fit:cover;width:100%;margin-bottom:1.25rem;display:block}
-.blog-img-placeholder{height:220px;background:linear-gradient(135deg,#e8e2d8,#cfc4b3);margin-bottom:1.25rem;display:flex;align-items:center;justify-content:center;color:var(--gold-light);font-size:3rem}
-.blog-date{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
-.blog-title{font-family:var(--serif);font-size:1.15rem;font-weight:400;margin-bottom:.5rem;line-height:1.4;transition:color .2s}
-.blog-excerpt{font-size:13px;color:var(--muted);line-height:1.7}
-
-/* CONTACT */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
-.contact-detail{display:flex;align-items:center;gap:.75rem;font-size:13px;color:var(--muted);margin-bottom:.75rem}
-.contact-detail i{color:var(--gold)}
-.contact-info p{color:var(--muted);font-size:14px;line-height:1.8;margin-bottom:2rem}
-.form-group{margin-bottom:1.5rem}
-.form-group label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
-.form-group input,.form-group textarea,.form-group select{width:100%;border:0.5px solid var(--border);padding:10px 14px;font-family:var(--sans);font-size:14px;font-weight:300;background:#fff;color:var(--ink);outline:none;transition:border-color .2s;border-radius:0;appearance:none}
-.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold)}
-.form-group textarea{height:120px;resize:vertical}
-
-/* FOOTER */
-footer{padding:3rem 4rem;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-.footer-logo{font-family:var(--serif);font-size:1rem;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
-.footer-logo span{color:var(--gold)}
-.footer-copy{font-size:12px;color:var(--muted)}
-.footer-links{display:flex;gap:2rem}
-.footer-links a{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none}
-.footer-links a:hover{color:var(--gold)}
-
-/* BLOG POST PAGE */
-.post-page{display:none;max-width:720px;margin:0 auto;padding:4rem 2rem}
-.post-page.active{display:block}
-.main-page.hidden{display:none}
-.post-back{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:.5rem;margin-bottom:3rem;background:none;border:none;transition:color .2s}
-.post-back:hover{color:var(--gold)}
-.post-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:0.5px solid var(--border)}
-.post-date{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
-.post-header h1{font-family:var(--serif);font-size:2.8rem;font-weight:300;line-height:1.2;margin-bottom:1rem}
-.post-content{font-size:15px;line-height:1.9;color:var(--ink)}
-.post-content h2{font-family:var(--serif);font-size:1.8rem;font-weight:300;margin:2.5rem 0 1rem}
-.post-content h3{font-family:var(--serif);font-size:1.3rem;font-weight:400;margin:2rem 0 .75rem}
-.post-content p{margin-bottom:1.25rem;color:var(--muted)}
-.post-content em{font-style:italic}
-.post-content strong{font-weight:400;color:var(--ink)}
-.post-img{width:100%;height:320px;object-fit:cover;margin-bottom:3rem}
-
-@media(max-width:768px){
-  nav{padding:1rem 1.5rem}
-  .nav-links{display:none}
-  .hero{grid-template-columns:1fr}
-  .hero-visual{display:none}
-  .hero-text{padding:3rem 1.5rem}
-  .hero h1{font-size:2.5rem}
-  section{padding:4rem 1.5rem}
-  .method-grid,.about-grid,.contact-grid,.pricing-grid,.testi-grid{grid-template-columns:1fr}
-  .questions-grid{grid-template-columns:1fr 1fr}
-  .blog-grid{grid-template-columns:1fr}
-  footer{flex-direction:column;gap:1.5rem;text-align:center;padding:2rem 1.5rem}
-}
-</style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.65">
+  <style type="text/css">
+    body {background-color: #f9f6f1}
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 22.4px; font: 13.2px Georgia; color: #141310; -webkit-text-stroke: #141310}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 20.4px; font: 12.0px 'Helvetica Light'; color: #58524d; -webkit-text-stroke: #58524d}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; line-height: 25.5px; font: 11.0px 'Helvetica Neue'; color: #58524d; -webkit-text-stroke: #58524d}
+    p.p4 {margin: 0.0px 0.0px 30.0px 0.0px; line-height: 25.2px; font: 14.0px 'Helvetica Light'; color: #58524d; -webkit-text-stroke: #58524d}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 25.5px; font: 12.0px 'Helvetica Neue'; color: #141310; -webkit-text-stroke: #141310}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 22.1px; font: 13.0px Times; color: #141310; -webkit-text-stroke: #141310}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 28.9px; font: 17.0px 'Songti SC'; color: #141310; -webkit-text-stroke: #141310}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 28.9px; font: 17.0px Menlo; color: #141310; -webkit-text-stroke: #141310}
+    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 25.5px; font: 15.0px 'Helvetica Light'; color: #141310; -webkit-text-stroke: #141310; background-color: #e2dbcf; min-height: 18.0px}
+    p.p11 {margin: 0.0px 0.0px 9.0px 0.0px; line-height: 18.7px; font: 11.0px 'Helvetica Light'; color: #a58158; -webkit-text-stroke: #a58158}
+    p.p13 {margin: 0.0px 0.0px 36.0px 0.0px; line-height: 25.2px; font: 14.0px 'Helvetica Light'; color: #58524d; -webkit-text-stroke: #58524d}
+    p.p15 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 23.4px; font: 13.0px 'Helvetica Light'; color: #58524d; -webkit-text-stroke: #58524d}
+    p.p17 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 22.1px; font: 13.0px 'Helvetica Light'; color: #58524d; -webkit-text-stroke: #58524d}
+    p.p18 {margin: 0.0px 0.0px 6.0px 0.0px; line-height: 18.7px; font: 11.0px 'Helvetica Light'; color: #58524d; -webkit-text-stroke: #58524d}
+    p.p19 {margin: 0.0px 0.0px 3.0px 0.0px; line-height: 44.9px; font: 26.4px Georgia; color: #141310; -webkit-text-stroke: #141310}
+    p.p20 {margin: 0.0px 0.0px 18.0px 0.0px; line-height: 22.1px; font: 13.0px 'Helvetica Light'; color: #58524d; -webkit-text-stroke: #58524d}
+    p.p21 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 25.5px; font: 12.0px 'Helvetica Neue'; color: #141310; -webkit-text-stroke: #141310; background-color: #ffffff}
+    p.p22 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 17.0px; font: 10.0px 'Helvetica Light'; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #a58158}
+    p.p23 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 25.5px; font: 12.0px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #a58158}
+    p.p24 {margin: 0.0px 0.0px 9.0px 0.0px; line-height: 28.6px; font: 16.8px Georgia; color: #141310; -webkit-text-stroke: #141310}
+    p.p25 {margin: 0.0px 0.0px 18.0px 0.0px; line-height: 24.7px; font: 13.0px 'Helvetica Light'; color: #58524d; -webkit-text-stroke: #58524d}
+    p.p26 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 102.0px; font: 60.0px Menlo; color: #c9aa84; -webkit-text-stroke: #c9aa84}
+    p.p27 {margin: 0.0px 0.0px 12.0px 0.0px; line-height: 26.6px; font: 14.0px 'Helvetica Light'; color: #58524d; -webkit-text-stroke: #58524d}
+    p.p28 {margin: 0.0px 0.0px 12.0px 0.0px; line-height: 22.8px; font: 12.0px Georgia; color: #a58158; -webkit-text-stroke: #a58158}
+    p.p29 {margin: 0.0px 0.0px 12.0px 0.0px; line-height: 21.4px; font: 12.6px Georgia; color: #141310; -webkit-text-stroke: #141310}
+    p.p30 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 25.5px; font: 15.0px 'Helvetica Light'; color: #141310; -webkit-text-stroke: #141310; min-height: 18.0px}
+    p.p31 {margin: 0.0px 0.0px 24.0px 0.0px; line-height: 25.2px; font: 14.0px 'Helvetica Light'; color: #58524d; -webkit-text-stroke: #58524d}
+    p.p32 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 22.1px; font: 13.0px 'Helvetica Light'; color: #a58158; -webkit-text-stroke: #a58158; min-height: 16.0px}
+    p.p33 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 18.7px; font: 11.0px 'Helvetica Light'; color: #58524d; -webkit-text-stroke: #58524d}
+    p.p34 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 25.5px; font: 14.0px Times; color: #141310; -webkit-text-stroke: #141310; background-color: #ffffff}
+    p.p35 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 25.5px; font: 14.0px 'Helvetica Light'; color: #141310; -webkit-text-stroke: #141310; min-height: 17.0px}
+    p.p36 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 25.5px; font: 12.0px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p37 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 20.4px; font: 12.0px Georgia; color: #141310; -webkit-text-stroke: #141310}
+    li.li17 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 22.1px; font: 13.0px 'Helvetica Light'; color: #58524d; -webkit-text-stroke: #58524d}
+    span.s1 {font-kerning: none; background-color: #f9f6f1}
+    span.s2 {font: 13.2px AppleMyungjo; font-kerning: none; color: #a58158; background-color: #f9f6f1; -webkit-text-stroke: 0px #a58158}
+    span.s3 {font-kerning: none}
+    span.s4 {font-kerning: none; color: #58524d; -webkit-text-stroke: 0px #58524d}
+    span.s5 {font-kerning: none; color: #ffffff; background-color: #a58158; -webkit-text-stroke: 0px #ffffff}
+    span.s6 {font: 15.0px 'Helvetica Light'; font-kerning: none}
+    span.s7 {font-kerning: none; background-color: #ffffff}
+    span.s8 {font: 12.0px 'Helvetica Light'; font-kerning: none; color: #58524d; background-color: #ffffff; -webkit-text-stroke: 0px #58524d}
+    span.s9 {color: #a58158; -webkit-text-stroke: 0px #000000}
+    span.s10 {font-kerning: none; color: #a58158; -webkit-text-stroke: 0px #a58158}
+    span.s11 {font: 15.0px 'Helvetica Light'; font-kerning: none; color: #141310; background-color: #ffffff; -webkit-text-stroke: 0px #141310}
+    span.s12 {font: 15.0px 'Helvetica Light'; font-kerning: none; background-color: #ffffff}
+    span.s13 {font: 14.0px 'Helvetica Light'; font-kerning: none}
+    span.s14 {font-kerning: none; background-color: #a58158}
+    span.s15 {font: 15.0px 'Helvetica Light'; font-kerning: none; color: #141310; -webkit-text-stroke: 0px #141310}
+    span.s16 {font: 12.0px AppleMyungjo; font-kerning: none; color: #a58158; -webkit-text-stroke: 0px #a58158}
+    ul.ul1 {list-style-type: none}
+  </style>
 </head>
 <body>
-
-<!-- MAIN PAGE -->
-<div class="main-page" id="mainPage">
-
-<nav>
-  <a href="#" class="logo" onclick="showMain()">Horary <span>◈</span> Astrology</a>
-  <div class="nav-links" id="navlinks">
-    <a href="#method">La méthode</a>
-    <a href="#questions">Questions</a>
-    <a href="#tarifs">Tarifs</a>
-    <a href="#blog">Journal</a>
-    <a href="#contact">Contact</a>
-  </div>
-  <button class="lang-toggle" id="langbtn" onclick="toggleLang()">EN</button>
-</nav>
-
-<!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-text">
-    <p class="eyebrow" id="h-eyebrow">Astrologie horary traditionnelle</p>
-    <h1 id="h-title">Une réponse <em>précise</em><br>à votre question</h1>
-    <p id="h-sub">Basée sur la méthode de William Lilly et John Frawley, l'astrologie horary offre une réponse concrète à une question posée à un moment précis. Pas de thème natal requis.</p>
-    <button class="btn-primary" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})" id="h-cta">Poser une question</button>
-    <button class="btn-outline" onclick="document.querySelector('#method').scrollIntoView({behavior:'smooth'})" id="h-cta2">Découvrir la méthode</button>
-  </div>
-  <div class="hero-visual">
-    <div class="wheel-container">
-      <svg viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="190" cy="190" r="178" stroke="#e8e2d8" stroke-width="0.5"/>
-        <circle cx="190" cy="190" r="148" stroke="#e8e2d8" stroke-width="0.5"/>
-        <circle cx="190" cy="190" r="100" stroke="#d4b896" stroke-width="0.5"/>
-        <circle cx="190" cy="190" r="55" stroke="#e8e2d8" stroke-width="0.5"/>
-        <line x1="12" y1="190" x2="368" y2="190" stroke="#e8e2d8" stroke-width="0.5"/>
-        <line x1="190" y1="12" x2="190" y2="368" stroke="#e8e2d8" stroke-width="0.5"/>
-        <line x1="102" y1="40" x2="278" y2="340" stroke="#e8e2d8" stroke-width="0.5" opacity=".6"/>
-        <line x1="278" y1="40" x2="102" y2="340" stroke="#e8e2d8" stroke-width="0.5" opacity=".6"/>
-        <line x1="40" y1="102" x2="340" y2="278" stroke="#e8e2d8" stroke-width="0.5" opacity=".6"/>
-        <line x1="340" y1="102" x2="40" y2="278" stroke="#e8e2d8" stroke-width="0.5" opacity=".6"/>
-        <g font-family="'Cormorant Garamond', serif" fill="#b5936b" font-size="13" text-anchor="middle">
-          <text x="190" y="32">I</text><text x="348" y="196">VII</text>
-          <text x="190" y="358">IV</text><text x="32" y="196">X</text>
-          <text x="280" y="58">II</text><text x="340" y="140">III</text>
-          <text x="340" y="250">V</text><text x="280" y="330">VI</text>
-          <text x="100" y="330">VIII</text><text x="40" y="250">IX</text>
-          <text x="40" y="140">XI</text><text x="100" y="58">XII</text>
-        </g>
-        <g fill="#b5936b" font-family="'Cormorant Garamond', serif" font-size="17">
-          <text x="183" y="176">☉</text>
-          <text x="155" y="215">☽</text>
-          <text x="215" y="215">♄</text>
-          <text x="210" y="160">♃</text>
-          <text x="160" y="160">♂</text>
-        </g>
-        <circle cx="190" cy="190" r="8" fill="#b5936b" opacity=".4"/>
-        <circle cx="190" cy="190" r="3" fill="#b5936b"/>
-      </svg>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- METHOD -->
-<section id="method">
-  <p class="section-label" id="m-label">La méthode</p>
-  <div class="method-grid">
-    <div>
-      <h2 class="section-title" id="m-title">L'art de la question<br>et du moment</h2>
-      <p class="section-sub" id="m-sub">L'astrologie horary (du latin <em>hora</em>, « heure ») est une branche de l'astrologie traditionnelle dans laquelle on dresse un thème pour le moment précis où une question est posée. Ce thème contient la réponse.</p>
-    </div>
-    <div>
-      <div class="method-detail">
-        <h3 id="m1-title">La tradition Lilly–Frawley</h3>
-        <p id="m1-text">William Lilly (1602–1681) a codifié les règles de l'horary dans <em>Christian Astrology</em> (1647). John Frawley a redonné vie à cette méthode dans sa forme la plus rigoureuse. Je suis cette école strictement : planètes traditionnelles, dignités essentielles, réceptions mutuelles.</p>
-      </div>
-      <div class="method-detail">
-        <h3 id="m2-title">Comment ça fonctionne</h3>
-        <p id="m2-text">Vous posez une question sincère. Je note l'heure exacte et dresse le thème. Chaque question a un seigneur (un astre qui vous représente) et un astre qui représente l'objet de la question. Leur relation donne la réponse — oui, non, ou nuancée.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- QUESTIONS -->
-<section id="questions" style="padding-bottom:0">
-  <p class="section-label" id="q-label">Types de questions</p>
-  <h2 class="section-title" id="q-title">Ce que l'horary peut révéler</h2>
-  <p class="section-sub" id="q-sub">L'horary répond à une question précise, sincèrement posée. Plus la question est claire, plus la réponse le sera.</p>
-</section>
-<div class="questions-grid">
-  <div class="q-card"><i class="ti ti-heart q-icon"></i><h3 id="q1-t">Amour & relations</h3><p id="q1-p">Est-ce qu'il/elle partage mes sentiments ? Cette relation va-t-elle durer ?</p></div>
-  <div class="q-card"><i class="ti ti-briefcase q-icon"></i><h3 id="q2-t">Travail & carrière</h3><p id="q2-p">Vais-je obtenir ce poste ? Devrais-je accepter cette offre ?</p></div>
-  <div class="q-card"><i class="ti ti-home q-icon"></i><h3 id="q3-t">Logement & biens</h3><p id="q3-p">Vais-je obtenir ce logement ? Où ai-je perdu cet objet ?</p></div>
-  <div class="q-card"><i class="ti ti-coin q-icon"></i><h3 id="q4-t">Finances</h3><p id="q4-p">Vais-je récupérer cet argent ? Cette opportunité est-elle fiable ?</p></div>
-  <div class="q-card"><i class="ti ti-stethoscope q-icon"></i><h3 id="q5-t">Santé</h3><p id="q5-p">Quel est le pronostic ? (Toujours en complément d'un suivi médical.)</p></div>
-  <div class="q-card"><i class="ti ti-compass q-icon"></i><h3 id="q6-t">Voyages & décisions</h3><p id="q6-p">Devrais-je entreprendre ce voyage ? Quel chemin choisir ?</p></div>
-</div>
-
-<!-- PRICING -->
-<section id="tarifs" style="background:#fff">
-  <p class="section-label" id="p-label">Tarifs</p>
-  <h2 class="section-title" id="p-title">Formules</h2>
-  <p class="section-sub" id="p-sub">Chaque consultation comprend une analyse approfondie du thème et une réponse rédigée, avec explications. Délai de réponse : 48–72 h.</p>
-  <div class="pricing-grid">
-    <div class="price-card">
-      <p class="price-name" id="pc1-name">Question simple</p>
-      <p class="price-amount">35 <span>€</span></p>
-      <p class="price-desc" id="pc1-desc">Une question précise, une réponse directe (oui/non) avec les éléments clés du thème.</p>
-      <ul class="price-features">
-        <li><i class="ti ti-check"></i><span id="pf1-1">Analyse du thème horary</span></li>
-        <li><i class="ti ti-check"></i><span id="pf1-2">Réponse écrite (400–600 mots)</span></li>
-        <li><i class="ti ti-check"></i><span id="pf1-3">Image du thème incluse</span></li>
-      </ul>
-      <button class="btn-outline" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})" style="width:100%" id="pc1-btn">Commander</button>
-    </div>
-    <div class="price-card featured">
-      <span class="price-badge" id="pc2-badge">Recommandé</span>
-      <p class="price-name" id="pc2-name">Consultation complète</p>
-      <p class="price-amount">65 <span>€</span></p>
-      <p class="price-desc" id="pc2-desc">Analyse approfondie avec explications pédagogiques des indicateurs, timing, et nuances.</p>
-      <ul class="price-features">
-        <li><i class="ti ti-check"></i><span id="pf2-1">Tout ce qui précède</span></li>
-        <li><i class="ti ti-check"></i><span id="pf2-2">Réponse longue (800–1200 mots)</span></li>
-        <li><i class="ti ti-check"></i><span id="pf2-3">Timing et indices de délai</span></li>
-        <li><i class="ti ti-check"></i><span id="pf2-4">Question de suivi possible</span></li>
-      </ul>
-      <button class="btn-primary" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})" style="width:100%" id="pc2-btn">Commander</button>
-    </div>
-    <div class="price-card">
-      <p class="price-name" id="pc3-name">Objet perdu</p>
-      <p class="price-amount">25 <span>€</span></p>
-      <p class="price-desc" id="pc3-desc">Spécialisé : localisation d'objets perdus ou volés. Réponse avec indications directionnelles.</p>
-      <ul class="price-features">
-        <li><i class="ti ti-check"></i><span id="pf3-1">Analyse maisons II/IV/VIII</span></li>
-        <li><i class="ti ti-check"></i><span id="pf3-2">Indications de lieu</span></li>
-        <li><i class="ti ti-check"></i><span id="pf3-3">Probabilité de retrouver l'objet</span></li>
-      </ul>
-      <button class="btn-outline" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})" style="width:100%" id="pc3-btn">Commander</button>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-  <p class="section-label" id="a-label">À propos</p>
-  <div class="about-grid">
-    <!-- Remplace le div ci-dessous par <img src="images/photo.jpg" class="about-photo" alt=""> quand tu as une photo -->
-    <div class="about-photo-placeholder">♃</div>
-    <div class="about-text">
-      <h2 class="section-title" id="a-title">Praticienne de la<br>tradition classique</h2>
-      <p id="a-p1">Je pratique l'astrologie horary selon la méthode traditionnelle telle qu'enseignée par William Lilly et transmise par John Frawley. Cette approche, codifiée au XVIIe siècle, est d'une précision redoutable lorsqu'elle est appliquée rigoureusement.</p>
-      <p id="a-p2">Mon approche est honnête : si le thème n'est pas lisible, ou si la question ne relève pas de l'horary, je vous le dis. Je ne fabrique pas de réponses rassurantes.</p>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="testimonials" style="background:#fff">
-  <p class="section-label" id="t-label">Témoignages</p>
-  <h2 class="section-title" id="t-title">Ce que disent les clients</h2>
-  <div class="testi-grid">
-    <div class="testi-card">
-      <p class="testi-quote" id="t1">« La réponse était nette, sans fioritures. Et elle s'est confirmée. Une lecture qui m'a guidée dans un moment de vraie incertitude. »</p>
-      <p class="testi-author">— M.L., Lyon</p>
-    </div>
-    <div class="testi-card">
-      <p class="testi-quote" id="t2">« J'avais lu beaucoup sur l'horary mais n'avais jamais eu une consultation si clairement expliquée. On comprend pourquoi le thème répond oui ou non. »</p>
-      <p class="testi-author">— P.D., Bruxelles</p>
-    </div>
-    <div class="testi-card">
-      <p class="testi-quote" id="t3">« Sceptique au départ. Je l'ai consultée pour une question de travail. Le timing annoncé s'est révélé exact à deux semaines près. »</p>
-      <p class="testi-author">— A.R., Montréal</p>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-  <p class="section-label" id="f-label">FAQ</p>
-  <h2 class="section-title" id="f-title">Questions fréquentes</h2>
-  <div class="faq-list" id="faqlist"></div>
-</section>
-
-<!-- BLOG -->
-<section id="blog" style="background:#fff">
-  <p class="section-label" id="b-label">Journal</p>
-  <h2 class="section-title" id="b-title">Réflexions sur l'horary</h2>
-  <p class="section-sub" id="b-sub">Analyses de thèmes, explorations techniques, et pensées sur la pratique de l'astrologie traditionnelle.</p>
-  <div class="blog-grid" id="blogGrid"></div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <p class="section-label" id="c-label">Contact</p>
-  <div class="contact-grid">
-    <div class="contact-info">
-      <h2 class="section-title" id="c-title">Poser votre question</h2>
-      <p id="c-intro">Posez votre question par écrit, avec précision. Incluez le contexte nécessaire mais formulez une seule question principale. Je note l'heure à laquelle je lis votre message.</p>
-      <div class="contact-detail"><i class="ti ti-clock"></i><span id="c-delay">Délai de réponse : 48 à 72 heures</span></div>
-      <div class="contact-detail"><i class="ti ti-language"></i><span>Français · English</span></div>
-      <div class="contact-detail"><i class="ti ti-mail"></i><span>contact@horary-astrology.com</span></div>
-    </div>
-    <div>
-      <div class="form-group"><label id="fl-name">Votre nom</label><input type="text" placeholder="Marie Dupont"></div>
-      <div class="form-group"><label>Email</label><input type="email" placeholder="marie@email.com"></div>
-      <div class="form-group">
-        <label id="fl-formula">Formule</label>
-        <select id="formulaselect">
-          <option id="fo-1">Question simple — 35 €</option>
-          <option id="fo-2" selected>Consultation complète — 65 €</option>
-          <option id="fo-3">Objet perdu — 25 €</option>
-        </select>
-      </div>
-      <div class="form-group"><label id="fl-q">Votre question</label><textarea placeholder="Décrivez votre situation et posez votre question précisément..."></textarea></div>
-      <button class="btn-primary" style="width:100%" id="submit-btn">Envoyer ma question</button>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <a href="#" class="footer-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">Horary <span>◈</span> Astrology</a>
-  <div class="footer-links">
-    <a href="#method" id="fl-m">Méthode</a>
-    <a href="#tarifs" id="fl-t">Tarifs</a>
-    <a href="#contact" id="fl-c">Contact</a>
-  </div>
-  <p class="footer-copy" id="foot-copy">© 2025 · Méthode Lilly–Frawley</p>
-</footer>
-
-</div><!-- end main-page -->
-
-<!-- BLOG POST PAGE -->
-<div class="post-page" id="postPage">
-  <nav style="position:sticky;top:0;background:var(--cream);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 4rem;border-bottom:0.5px solid var(--border)">
-    <a href="#" class="logo" onclick="showMain()">Horary <span>◈</span> Astrology</a>
-    <button class="lang-toggle" onclick="toggleLang()">EN</button>
-  </nav>
-  <div style="max-width:720px;margin:0 auto;padding:4rem 2rem">
-    <button class="post-back" onclick="showMain()"><i class="ti ti-arrow-left"></i> <span id="back-label">Journal</span></button>
-    <div class="post-header">
-      <p class="post-date" id="post-date"></p>
-      <h1 id="post-title"></h1>
-    </div>
-    <img id="post-img" class="post-img" src="" alt="" style="display:none">
-    <div class="post-content" id="post-content"></div>
-  </div>
-</div>
-
-<script>
-// ─── BLOG POSTS DATA ───────────────────────────────────────────────
-// Pour ajouter un article : copie un objet, change les champs.
-// "image" est optionnel — laisse "" si pas d'image.
-const posts = [
-  {
-    slug: "reception-mutuelle",
-    date: "Mai 2025",
-    title: "La réception mutuelle : quand les planètes s'échangent leurs clés",
-    excerpt: "Un des concepts les plus puissants en horary, souvent sous-estimé. Comment une réception mutuelle peut transformer une réponse négative.",
-    image: "",
-    content: `
-      <p>La réception mutuelle est l'un de ces concepts qui séparent une lecture horary superficielle d'une analyse véritablement rigoureuse. Pourtant, dans de nombreux textes modernes, elle est soit ignorée, soit réduite à une curiosité technique.</p>
-      <h2>Qu'est-ce que la réception mutuelle ?</h2>
-      <p>Deux planètes sont en réception mutuelle lorsque chacune se trouve dans un signe où l'autre a une dignité. La forme la plus forte est la réception mutuelle par domicile : par exemple, le Soleil en Cancer et la Lune en Lion — le Soleil domine le Lion, la Lune domine le Cancer, et chacune "accueille" l'autre chez elle.</p>
-      <p>Lilly décrit cela comme deux personnes qui se rendent service mutuellement, qui ont un intérêt commun à coopérer. Dans un thème horary, cela signifie souvent que les deux parties veulent la même chose — même si une aspect séparant pourrait laisser croire le contraire.</p>
-      <h2>Pourquoi c'est crucial</h2>
-      <p>Imaginons une question sur une relation amoureuse. Les seigneurs des maisons I et VII ne forment pas d'aspect. En lecture superficielle : pas de connexion, réponse négative. Mais si ces planètes sont en réception mutuelle par domicile ou exaltation, Lilly nous dit de lire cela comme un lien fort — ils se "voient" et se "veulent" mutuellement.</p>
-      <p>C'est particulièrement important dans les questions de réconciliation, de négociation, ou de partenariats commerciaux.</p>
-      <h2>Les degrés de réception</h2>
-      <p>Toutes les réceptions mutuelles ne sont pas équivalentes. Par ordre décroissant de force : domicile, exaltation, triplicity, terme, face. Une réception mutuelle par face est faible — elle indique une connexion superficielle, un désir de contact sans substance profonde.</p>
-    `
-  },
-  {
-    slug: "via-combusta",
-    date: "Mars 2025",
-    title: "La Lune via combusta : quand le thème refuse de parler",
-    excerpt: "Certains thèmes ont une signature d'incertitude radicale. Reconnaître le via combusta et savoir quand refuser de juger.",
-    image: "",
-    content: `
-      <p>L'une des premières choses que Lilly enseigne est de vérifier si le thème est jugeable avant même de l'interpréter. Parmi les signes d'un thème peu fiable, la Lune via combusta est l'un des plus connus — et l'un des plus mal compris.</p>
-      <h2>Qu'est-ce que le via combusta ?</h2>
-      <p>Le via combusta, littéralement "la route brûlée", s'étend de 15° Balance à 15° Scorpion. Cette zone du zodiaque est traditionnellement considérée comme perturbée : elle contient des étoiles fixes néfastes, et la Lune y perd une grande partie de sa dignité naturelle.</p>
-      <p>Lorsque la Lune se trouve dans cette zone, le thème est réputé incertain, perturbé, difficile à lire avec confiance. La question elle-même peut être mal posée, ou la situation tellement fluide qu'aucune réponse stable n'est possible.</p>
-      <h2>Faut-il toujours refuser de juger ?</h2>
-      <p>Non, et c'est là que beaucoup de praticiens font une erreur. Lilly lui-même note des exceptions : si la Lune via combusta est en bon aspect avec les luminaires ou bien reçue, le thème reste lisible. La règle est un signal d'alerte, pas une interdiction absolue.</p>
-      <p>En pratique, je prends cela comme une invitation à la prudence : je juge le thème, mais j'informe le consultant que les indicateurs sont moins stables que d'habitude, et que ma lecture est faite avec davantage de réserve.</p>
-    `
-  },
-  {
-    slug: "formuler-question",
-    date: "Janvier 2025",
-    title: "Poser la bonne question : l'art de la formulation en horary",
-    excerpt: "La qualité de la réponse dépend souvent de la précision de la question. Quelques règles pour bien formuler sa demande.",
-    image: "",
-    content: `
-      <p>En horary, la question n'est pas un prétexte — elle est la matière première du thème. Un thème mal né d'une question floue donnera une lecture ambiguë, même entre les mains du meilleur astrologue.</p>
-      <h2>Une question, une réponse</h2>
-      <p>La règle fondamentale est qu'un thème horary répond à une seule question. Si vous demandez "Est-ce qu'il m'aime et devrais-je déménager pour le rejoindre ?", vous posez deux questions distinctes. Le thème ne peut pas répondre aux deux avec la même clarté.</p>
-      <p>Choisissez la question qui vous préoccupe le plus profondément. Souvent, l'hésitation entre deux questions en révèle une troisième, plus fondamentale.</p>
-      <h2>La sincérité comme condition</h2>
-      <p>Lilly insiste : la question doit être sincèrement posée. Cela signifie que vous devez réellement ne pas connaître la réponse, et que la question doit vous préoccuper au moment où vous la posez. Poser une question par curiosité intellectuelle, ou pour "tester" l'astrologue, produit des thèmes non-radicaux.</p>
-      <h2>Précision sans sur-spécification</h2>
-      <p>"Vais-je trouver un travail ?" est trop vague. "Vais-je obtenir le poste de chef de projet chez Dupont & Associés pour lequel j'ai passé un entretien le 15 janvier ?" est précis. La précision permet à l'astrologue d'identifier clairement les signifiants dans le thème.</p>
-    `
-  }
-];
-
-// ─── BLOG RENDERING ───────────────────────────────────────────────
-function renderBlog() {
-  const grid = document.getElementById('blogGrid');
-  grid.innerHTML = posts.map(p => `
-    <a class="blog-card" onclick="showPost('${p.slug}')" href="#">
-      ${p.image
-        ? `<img src="${p.image}" class="blog-img" alt="${p.title}">`
-        : `<div class="blog-img-placeholder"><i class="ti ti-moon-stars"></i></div>`}
-      <p class="blog-date">${p.date}</p>
-      <h3 class="blog-title">${p.title}</h3>
-      <p class="blog-excerpt">${p.excerpt}</p>
-    </a>
-  `).join('');
-}
-
-function showPost(slug) {
-  const post = posts.find(p => p.slug === slug);
-  if (!post) return;
-  document.getElementById('post-date').textContent = post.date;
-  document.getElementById('post-title').textContent = post.title;
-  document.getElementById('post-content').innerHTML = post.content;
-  const img = document.getElementById('post-img');
-  if (post.image) { img.src = post.image; img.style.display = 'block'; }
-  else { img.style.display = 'none'; }
-  document.getElementById('mainPage').classList.add('hidden');
-  document.getElementById('postPage').classList.add('active');
-  window.scrollTo(0, 0);
-}
-
-function showMain() {
-  document.getElementById('mainPage').classList.remove('hidden');
-  document.getElementById('postPage').classList.remove('active');
-  window.scrollTo(0, 0);
-  return false;
-}
-
-// ─── FAQ DATA ────────────────────────────────────────────────────
-const faqFR = [
-  {q:"Ai-je besoin de connaître mon thème natal ?",a:"Non. L'horary est complètement indépendant du thème natal. Il vous suffit de poser une question sincère — le moment où je la reçois devient le thème."},
-  {q:"Peut-on poser plusieurs questions ?",a:"Chaque consultation répond à une seule question principale. Si vous avez plusieurs questions, il faut autant de consultations. La clarté de la question est essentielle à la qualité de la réponse."},
-  {q:"L'horary peut-il se tromper ?",a:"Oui. Comme tout système d'interprétation, l'erreur est possible. Je préfère vous dire 'le thème est ambigu' plutôt que d'inventer une réponse."},
-  {q:"Combien de fois peut-on poser la même question ?",a:"La tradition est claire : on ne repose pas la même question si on n'est pas satisfait de la réponse. Cela invalide le thème. Une vraie question mérite une réponse, pas une validation."},
-  {q:"Quel est le délai de réponse ?",a:"48 à 72 heures en général. Je vous confirme la réception de votre question dès que je la lis, et c'est ce moment qui devient le thème horary."},
-];
-const faqEN = [
-  {q:"Do I need to know my natal chart?",a:"No. Horary astrology is completely independent of the natal chart. You simply ask a sincere question — the moment I receive it becomes the chart."},
-  {q:"Can I ask multiple questions?",a:"Each consultation answers one main question. If you have several questions, multiple consultations are needed."},
-  {q:"Can horary be wrong?",a:"Yes. Like any interpretive system, errors are possible. I'd rather say 'the chart is ambiguous' than invent an answer."},
-  {q:"Can I ask the same question again?",a:"Tradition is clear: do not re-ask the same question if dissatisfied with the answer — doing so invalidates the chart."},
-  {q:"What is the turnaround time?",a:"48 to 72 hours generally. I confirm receipt of your question as soon as I read it — that moment becomes the horary chart."},
-];
-
-function buildFAQ(items) {
-  const list = document.getElementById('faqlist');
-  list.innerHTML = '';
-  items.forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'faq-item';
-    div.innerHTML = `<div class="faq-q"><span>${item.q}</span><i class="ti ti-plus"></i></div><div class="faq-a">${item.a}</div>`;
-    div.querySelector('.faq-q').onclick = () => div.classList.toggle('open');
-    list.appendChild(div);
-  });
-}
-
-// ─── TRANSLATIONS ─────────────────────────────────────────────────
-let lang = 'fr';
-const T = {
-  fr: {
-    navlinks: ['La méthode','Questions','Tarifs','Journal','Contact'],
-    langbtn:'EN','h-eyebrow':'Astrologie horary traditionnelle',
-    'h-title':'Une réponse <em>précise</em><br>à votre question',
-    'h-sub':"Basée sur la méthode de William Lilly et John Frawley, l'astrologie horary offre une réponse concrète à une question posée à un moment précis. Pas de thème natal requis.",
-    'h-cta':'Poser une question','h-cta2':'Découvrir la méthode',
-    'm-label':'La méthode','m-title':"L'art de la question<br>et du moment",
-    'm-sub':"L'astrologie horary (du latin <em>hora</em>, « heure ») est une branche de l'astrologie traditionnelle dans laquelle on dresse un thème pour le moment précis où une question est posée.",
-    'm1-title':'La tradition Lilly–Frawley','m1-text':"William Lilly (1602–1681) a codifié les règles de l'horary dans <em>Christian Astrology</em> (1647). John Frawley a redonné vie à cette méthode. Je suis cette école strictement : planètes traditionnelles, dignités essentielles, réceptions mutuelles.",
-    'm2-title':'Comment ça fonctionne','m2-text':"Vous posez une question sincère. Je note l'heure exacte et dresse le thème. Leur relation donne la réponse — oui, non, ou nuancée.",
-    'q-label':'Types de questions','q-title':"Ce que l'horary peut révéler",
-    'q-sub':"L'horary répond à une question précise, sincèrement posée.",
-    'q1-t':'Amour & relations','q1-p':"Est-ce qu'il/elle partage mes sentiments ? Cette relation va-t-elle durer ?",
-    'q2-t':'Travail & carrière','q2-p':"Vais-je obtenir ce poste ? Devrais-je accepter cette offre ?",
-    'q3-t':'Logement & biens','q3-p':"Vais-je obtenir ce logement ? Où ai-je perdu cet objet ?",
-    'q4-t':'Finances','q4-p':"Vais-je récupérer cet argent ? Cette opportunité est-elle fiable ?",
-    'q5-t':'Santé','q5-p':"Quel est le pronostic ? (Toujours en complément d'un suivi médical.)",
-    'q6-t':'Voyages & décisions','q6-p':"Devrais-je entreprendre ce voyage ? Quel chemin choisir ?",
-    'p-label':'Tarifs','p-title':'Formules',
-    'p-sub':"Chaque consultation comprend une analyse approfondie du thème et une réponse rédigée. Délai : 48–72 h.",
-    'pc1-name':'Question simple','pc1-desc':'Une question précise, une réponse directe avec les éléments clés.',
-    'pf1-1':'Analyse du thème horary','pf1-2':'Réponse écrite (400–600 mots)','pf1-3':'Image du thème incluse',
-    'pc1-btn':'Commander','pc2-badge':'Recommandé',
-    'pc2-name':'Consultation complète','pc2-desc':'Analyse approfondie avec explications des indicateurs, timing, et nuances.',
-    'pf2-1':'Tout ce qui précède','pf2-2':'Réponse longue (800–1200 mots)','pf2-3':'Timing et indices de délai','pf2-4':'Question de suivi possible',
-    'pc2-btn':'Commander','pc3-name':'Objet perdu',
-    'pc3-desc':'Localisation d\'objets perdus ou volés. Réponse avec indications directionnelles.',
-    'pf3-1':'Analyse maisons II/IV/VIII','pf3-2':'Indications de lieu','pf3-3':"Probabilité de retrouver l'objet",
-    'pc3-btn':'Commander',
-    'a-label':'À propos','a-title':'Praticienne de la<br>tradition classique',
-    'a-p1':"Je pratique l'astrologie horary selon la méthode traditionnelle de William Lilly et John Frawley. Codifiée au XVIIe siècle, elle est d'une précision redoutable lorsqu'elle est appliquée rigoureusement.",
-    'a-p2':"Mon approche est honnête : si le thème n'est pas lisible, je vous le dis. Je ne fabrique pas de réponses rassurantes.",
-    't-label':'Témoignages','t-title':'Ce que disent les clients',
-    't1':"« La réponse était nette, sans fioritures. Et elle s'est confirmée. »",'t2':"« Une consultation clairement expliquée. On comprend pourquoi le thème répond oui ou non. »",
-    't3':"« Sceptique au départ. Le timing annoncé s'est révélé exact à deux semaines près. »",
-    'f-label':'FAQ','f-title':'Questions fréquentes',
-    'b-label':'Journal','b-title':"Réflexions sur l'horary",
-    'b-sub':"Analyses de thèmes, explorations techniques, et pensées sur la pratique de l'astrologie traditionnelle.",
-    'c-label':'Contact','c-title':'Poser votre question',
-    'c-intro':"Posez votre question par écrit, avec précision. Une seule question principale. Je note l'heure à laquelle je lis votre message.",
-    'c-delay':'Délai de réponse : 48 à 72 heures',
-    'fl-name':'Votre nom','fl-formula':'Formule','fl-q':'Votre question',
-    'fo-1':'Question simple — 35 €','fo-2':'Consultation complète — 65 €','fo-3':'Objet perdu — 25 €',
-    'submit-btn':'Envoyer ma question',
-    'fl-m':'Méthode','fl-t':'Tarifs','fl-c':'Contact',
-    'foot-copy':'© 2025 · Méthode Lilly–Frawley','back-label':'Journal'
-  },
-  en: {
-    navlinks: ['The method','Questions','Pricing','Journal','Contact'],
-    langbtn:'FR','h-eyebrow':'Traditional Horary Astrology',
-    'h-title':'A precise <em>answer</em><br>to your question',
-    'h-sub':'Based on the method of William Lilly and John Frawley, horary astrology provides a concrete answer to a question asked at a specific moment. No natal chart required.',
-    'h-cta':'Ask a question','h-cta2':'Discover the method',
-    'm-label':'The method','m-title':'The art of the question<br>and the moment',
-    'm-sub':'Horary astrology (from Latin <em>hora</em>, "hour") is a branch of traditional astrology in which a chart is cast for the moment a question is asked. That chart holds the answer.',
-    'm1-title':'The Lilly–Frawley tradition','m1-text':'William Lilly (1602–1681) codified horary rules in <em>Christian Astrology</em> (1647). John Frawley revived the method in its most rigorous form. I follow this school strictly: traditional planets, essential dignities, mutual receptions.',
-    'm2-title':'How it works','m2-text':'You ask a sincere question. I note the exact time and cast the chart. Their relationship gives the answer — yes, no, or nuanced.',
-    'q-label':'Question types','q-title':'What horary can reveal',
-    'q-sub':'Horary answers a specific, sincerely asked question.',
-    'q1-t':'Love & relationships','q1-p':"Does he/she share my feelings? Will this relationship last?",
-    'q2-t':'Work & career','q2-p':'Will I get the job? Should I accept this offer?',
-    'q3-t':'Housing & property','q3-p':'Will I get this place? Where did I lose this object?',
-    'q4-t':'Finances','q4-p':'Will I get this money back? Is this opportunity reliable?',
-    'q5-t':'Health','q5-p':'What is the prognosis? (Always complementary to medical care.)',
-    'q6-t':'Travel & decisions','q6-p':'Should I take this trip? Which path to choose?',
-    'p-label':'Pricing','p-title':'Packages',
-    'p-sub':'Each consultation includes a thorough chart analysis and a written response. Turnaround: 48–72 h.',
-    'pc1-name':'Single question','pc1-desc':'One precise question, a direct answer (yes/no) with the key chart factors.',
-    'pf1-1':'Horary chart analysis','pf1-2':'Written answer (400–600 words)','pf1-3':'Chart image included',
-    'pc1-btn':'Order','pc2-badge':'Recommended',
-    'pc2-name':'Full consultation','pc2-desc':'In-depth analysis with explanations of indicators, timing, and nuances.',
-    'pf2-1':'Everything above','pf2-2':'Long answer (800–1200 words)','pf2-3':'Timing and delay indicators','pf2-4':'One follow-up question allowed',
-    'pc2-btn':'Order','pc3-name':'Lost object',
-    'pc3-desc':'Specialized: locating lost or stolen objects. Answer with directional indications.',
-    'pf3-1':'Analysis of houses II/IV/VIII','pf3-2':'Location indications','pf3-3':'Probability of finding the object',
-    'pc3-btn':'Order',
-    'a-label':'About','a-title':'Practitioner of<br>the classical tradition',
-    'a-p1':"I practice horary astrology following the traditional method of William Lilly and John Frawley. Codified in the 17th century, it is remarkably precise when applied rigorously.",
-    'a-p2':"My approach is honest: if the chart is unreadable, I'll tell you. I don't manufacture reassuring answers.",
-    't-label':'Testimonials','t-title':'What clients say',
-    't1':'"The answer was clear, no fluff. And it proved accurate."','t2':'"A consultation so clearly explained. You understand why the chart says yes or no."',
-    't3':'"Skeptical at first. The timing given proved accurate within two weeks."',
-    'f-label':'FAQ','f-title':'Frequently asked questions',
-    'b-label':'Journal','b-title':'Reflections on horary',
-    'b-sub':'Chart analyses, technical explorations, and thoughts on the practice of traditional astrology.',
-    'c-label':'Contact','c-title':'Ask your question',
-    'c-intro':"Write your question clearly and precisely. One main question. I note the time at which I read your message.",
-    'c-delay':'Response time: 48 to 72 hours',
-    'fl-name':'Your name','fl-formula':'Package','fl-q':'Your question',
-    'fo-1':'Single question — €35','fo-2':'Full consultation — €65','fo-3':'Lost object — €25',
-    'submit-btn':'Send my question',
-    'fl-m':'Method','fl-t':'Pricing','fl-c':'Contact',
-    'foot-copy':'© 2025 · Lilly–Frawley method','back-label':'Journal'
-  }
-};
-
-function toggleLang() {
-  lang = lang === 'fr' ? 'en' : 'fr';
-  const t = T[lang];
-  const links = document.querySelectorAll('#navlinks a');
-  t.navlinks.forEach((txt, i) => { if (links[i]) links[i].textContent = txt; });
-  for (const [id, val] of Object.entries(t)) {
-    if (id === 'navlinks') continue;
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = val;
-  }
-  buildFAQ(lang === 'en' ? faqEN : faqFR);
-}
-
-// ─── INIT ─────────────────────────────────────────────────────────
-renderBlog();
-buildFAQ(faqFR);
-</script>
+<p class="p1"><span class="s1">HORARY </span><span class="s2">◈</span><span class="s1"> ASTROLOGY</span></p>
+<p class="p2"><span class="s1">LA MÉTHODE</span></p>
+<p class="p2"><span class="s1">QUESTIONS</span></p>
+<p class="p2"><span class="s1">TARIFS</span></p>
+<p class="p2"><span class="s1">JOURNAL</span></p>
+<p class="p2"><span class="s1">CONTACT</span></p>
+<p class="p3"><span class="s1">EN</span></p>
+<p class="p4"><span class="s3">ASTROLOGIE HORARY TRADITIONNELLE</span></p>
+<h1 style="margin: 0.0px 0.0px 18.0px 0.0px; line-height: 50.2px; font: 45.6px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s3">Une réponse </span><span class="s4"><i>précise</i></span><span class="s3"><br>
+à votre question</span></h1>
+<p class="p4"><span class="s3">Basée sur la méthode de William Lilly et John Frawley, l'astrologie horary offre une réponse concrète à une question posée à un moment précis. Pas de thème natal requis.</span></p>
+<p class="p6"><span class="s5">POSER UNE QUESTION</span><span class="s6"> </span><span class="s3">DÉCOUVRIR LA MÉTHODE</span><span class="s6"><span class="Apple-converted-space"> </span></span></p>
+<p class="p7"><span class="s3">I</span></p>
+<p class="p7"><span class="s3">VII</span></p>
+<p class="p7"><span class="s3">IV</span></p>
+<p class="p7"><span class="s3">X</span></p>
+<p class="p7"><span class="s3">II</span></p>
+<p class="p7"><span class="s3">III</span></p>
+<p class="p7"><span class="s3">V</span></p>
+<p class="p7"><span class="s3">VI</span></p>
+<p class="p7"><span class="s3">VIII</span></p>
+<p class="p7"><span class="s3">IX</span></p>
+<p class="p7"><span class="s3">XI</span></p>
+<p class="p7"><span class="s3">XII</span></p>
+<p class="p8"><span class="s3">☉</span></p>
+<p class="p9"><span class="s3">☽</span></p>
+<p class="p9"><span class="s3">♄</span></p>
+<p class="p9"><span class="s3">♃</span></p>
+<p class="p8"><span class="s3">♂</span></p>
+<p class="p10"><span class="s3"></span><br></p>
+<p class="p11"><span class="s3">LA MÉTHODE</span></p>
+<h2 style="margin: 0.0px 0.0px 12.0px 0.0px; line-height: 34.6px; font: 28.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s3">L'art de la question<br>
+et du moment</span></h2>
+<p class="p13"><span class="s3">L'astrologie horary (du latin <i>hora</i>, « heure ») est une branche de l'astrologie traditionnelle dans laquelle on dresse un thème pour le moment précis où une question est posée. Ce thème contient la réponse.</span></p>
+<h3 style="margin: 0.0px 0.0px 9.0px 0.0px; line-height: 26.5px; font: 15.6px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s7">La tradition Lilly–Frawley</span></h3>
+<p class="p15"><span class="s7">William Lilly (1602–1681) a codifié les règles de l'horary dans <i>Christian Astrology</i> (1647). John Frawley a redonné vie à cette méthode dans sa forme la plus rigoureuse. Je suis cette école strictement : planètes traditionnelles, dignités essentielles, réceptions mutuelles.</span></p>
+<h3 style="margin: 0.0px 0.0px 9.0px 0.0px; line-height: 26.5px; font: 15.6px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s7">Comment ça fonctionne</span></h3>
+<p class="p15"><span class="s7">Vous posez une question sincère. Je note l'heure exacte et dresse le thème. Chaque question a un seigneur (un astre qui vous représente) et un astre qui représente l'objet de la question. Leur relation donne la réponse — oui, non, ou nuancée.</span></p>
+<p class="p10"><span class="s3"></span><br></p>
+<p class="p11"><span class="s3">TYPES DE QUESTIONS</span></p>
+<h2 style="margin: 0.0px 0.0px 12.0px 0.0px; line-height: 34.6px; font: 28.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s3">Ce que l'horary peut révéler</span></h2>
+<p class="p13"><span class="s3">L'horary répond à une question précise, sincèrement posée. Plus la question est claire, plus la réponse le sera.</span></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; line-height: 23.5px; font: 13.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s1">Amour &amp; relations</span></h3>
+<p class="p17"><span class="s1">Est-ce qu'il/elle partage mes sentiments ? Cette relation va-t-elle durer ?</span></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; line-height: 23.5px; font: 13.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s1">Travail &amp; carrière</span></h3>
+<p class="p17"><span class="s1">Vais-je obtenir ce poste ? Devrais-je accepter cette offre ?</span></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; line-height: 23.5px; font: 13.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s1">Logement &amp; biens</span></h3>
+<p class="p17"><span class="s1">Vais-je obtenir ce logement ? Où ai-je perdu cet objet ?</span></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; line-height: 23.5px; font: 13.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s1">Finances</span></h3>
+<p class="p17"><span class="s1">Vais-je récupérer cet argent ? Cette opportunité est-elle fiable ?</span></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; line-height: 23.5px; font: 13.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s1">Santé</span></h3>
+<p class="p17"><span class="s1">Quel est le pronostic ? (Toujours en complément d'un suivi médical.)</span></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; line-height: 23.5px; font: 13.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s1">Voyages &amp; décisions</span></h3>
+<p class="p17"><span class="s1">Devrais-je entreprendre ce voyage ? Quel chemin choisir ?</span></p>
+<p class="p11"><span class="s7">TARIFS</span></p>
+<h2 style="margin: 0.0px 0.0px 12.0px 0.0px; line-height: 34.6px; font: 28.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s7">Formules</span></h2>
+<p class="p13"><span class="s7">Chaque consultation comprend une analyse approfondie du thème et une réponse rédigée, avec explications. Délai de réponse : 48–72 h.</span></p>
+<p class="p18"><span class="s7">QUESTION SIMPLE</span></p>
+<p class="p19"><span class="s7">25 </span><span class="s8">€</span></p>
+<p class="p20"><span class="s7">Une question précise, une réponse directe (oui/non) avec les éléments clés du thème.</span></p>
+<ul class="ul1">
+  <li class="li17"><span class="s9"><i></i></span><span class="s10"><i><br>
+</i></span><span class="s7">Analyse du thème horary</span><span class="s3"><br>
+</span><span class="s10"><i><br>
+</i></span><span class="s7">Réponse écrite (400–600 mots)</span><span class="s3"><br>
+</span><span class="s10"><i><br>
+</i></span><span class="s7">Image du thème incluse</span><span class="s3"><br>
+</span></li>
+</ul>
+<p class="p21"><span class="s3">COMMANDER</span><span class="s6"><span class="Apple-converted-space"> </span></span></p>
+<p class="p22"><span class="s3">RECOMMANDÉ</span></p>
+<p class="p18"><span class="s7">CONSULTATION COMPLÈTE</span></p>
+<p class="p19"><span class="s7">45 </span><span class="s8">€</span></p>
+<p class="p20"><span class="s7">Analyse approfondie avec explications pédagogiques des indicateurs, timing, et nuances.</span></p>
+<ul class="ul1">
+  <li class="li17"><span class="s9"><i></i></span><span class="s10"><i><br>
+</i></span><span class="s7">Tout ce qui précède</span><span class="s3"><br>
+</span><span class="s10"><i><br>
+</i></span><span class="s7">Réponse longue (800–1200 mots)</span><span class="s3"><br>
+</span><span class="s10"><i><br>
+</i></span><span class="s7">Timing et indices de délai</span><span class="s3"><br>
+</span><span class="s10"><i><br>
+</i></span><span class="s7">Question de suivi possible</span><span class="s3"><br>
+</span></li>
+</ul>
+<p class="p23"><span class="s3">COMMANDER</span><span class="s11"><span class="Apple-converted-space"> </span></span></p>
+<p class="p18"><span class="s7">OBJET PERDU</span></p>
+<p class="p19"><span class="s7">20 </span><span class="s8">€</span></p>
+<p class="p20"><span class="s7">Spécialisé : localisation d'objets perdus ou volés. Réponse avec indications directionnelles.</span></p>
+<ul class="ul1">
+  <li class="li17"><span class="s9"><i></i></span><span class="s10"><i><br>
+</i></span><span class="s7">Analyse maisons II/IV/VIII</span><span class="s3"><br>
+</span><span class="s10"><i><br>
+</i></span><span class="s7">Indications de lieu</span><span class="s3"><br>
+</span><span class="s10"><i><br>
+</i></span><span class="s7">Probabilité de retrouver l'objet</span><span class="s3"><br>
+</span></li>
+</ul>
+<p class="p21"><span class="s3">COMMANDER</span><span class="s6"><span class="Apple-converted-space"> </span></span></p>
+<p class="p11"><span class="s7">TARIF SOLIDAIRE</span></p>
+<p class="p24"><span class="s7">Tu sais ce que tu peux donner.</span></p>
+<p class="p25"><span class="s7">On m'a enseigné gratuitement. L'horary m'a offert de la clarté quand j'en avais besoin. Je veux que ce savoir reste accessible à toutes et tous, quels que soient les moyens.</span><span class="s3"><br>
+<br>
+</span><span class="s7">Si les tarifs ci-dessus ne sont pas accessibles pour toi, contacte-moi. Pas de justification à fournir. On trouve ensemble ce qui est juste.</span></p>
+<p class="p6"><span class="s7">ME CONTACTER POUR LE TARIF SOLIDAIRE</span><span class="s12"><span class="Apple-converted-space"> </span></span></p>
+<p class="p11"><span class="s3">À PROPOS</span></p>
+<p class="p26"><span class="s3">♃</span></p>
+<h2 style="margin: 0.0px 0.0px 12.0px 0.0px; line-height: 34.6px; font: 28.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s3">Soukaina</span></h2>
+<p class="p27"><span class="s3">Je suis arrivée à l'astrologie horary par la géomancie, que j'ai étudiée auprès du Magister Geomantiae. C'est lui qui m'a enseigné l'horary — pendant près d'un an — lui-même étudiant direct de John Frawley. Ma méthode est donc celle de Frawley, dans sa forme la plus rigoureuse : planètes traditionnelles, dignités essentielles, réceptions mutuelles.</span></p>
+<p class="p27"><span class="s3">En septembre 2023, j'ai obtenu mon diplôme de Traditional Horary Astrology. Je propose des consultations en solo, le soir et le week-end, à des client·es du monde entier — en français et en anglais.</span></p>
+<p class="p27"><span class="s3">L'astrologie horary a été pour moi une boussole, une lumière dans des moments où tout était flou. Un outil pour mieux voir — soi, les situations, le monde. J'ai vu, pendant trois ans de pratique, combien une réponse claire peut aider quelqu'un à retrouver son cap.</span></p>
+<p class="p27"><span class="s3">C'est pour ça que je tiens à rendre ce savoir accessible à toutes et tous, quels que soient les moyens. On m'a enseigné gratuitement — je veux rendre ça au monde.</span></p>
+<p class="p28"><span class="s3"><i>Mon approche est féministe et intersectionnelle. L'astrologie ne devrait pas être un luxe.</i></span></p>
+<p class="p11"><span class="s7">TÉMOIGNAGES</span></p>
+<h2 style="margin: 0.0px 0.0px 12.0px 0.0px; line-height: 34.6px; font: 28.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s7">Ce que disent les clients</span></h2>
+<p class="p29"><span class="s7"><i>« La réponse était nette, sans fioritures. Et elle s'est confirmée. Une lecture qui m'a guidée dans un moment de vraie incertitude. »</i></span></p>
+<p class="p2"><span class="s7">— M.L., LYON</span></p>
+<p class="p29"><span class="s7"><i>« J'avais lu beaucoup sur l'horary mais n'avais jamais eu une consultation si clairement expliquée. On comprend pourquoi le thème répond oui ou non. »</i></span></p>
+<p class="p2"><span class="s7">— P.D., BRUXELLES</span></p>
+<p class="p29"><span class="s7"><i>« Sceptique au départ. Je l'ai consultée pour une question de travail. Le timing annoncé s'est révélé exact à deux semaines près. »</i></span></p>
+<p class="p2"><span class="s7">— A.R., MONTRÉAL</span></p>
+<p class="p11"><span class="s3">FAQ</span></p>
+<h2 style="margin: 0.0px 0.0px 12.0px 0.0px; line-height: 34.6px; font: 28.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s3">Questions fréquentes</span></h2>
+<p class="p30"><span class="s3"></span><br></p>
+<p class="p11"><span class="s7">JOURNAL</span></p>
+<h2 style="margin: 0.0px 0.0px 12.0px 0.0px; line-height: 34.6px; font: 28.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s7">Réflexions sur l'horary</span></h2>
+<p class="p13"><span class="s7">Analyses de thèmes, explorations techniques, et pensées sur la pratique de l'astrologie traditionnelle.</span></p>
+<p class="p11"><span class="s3">CONTACT</span></p>
+<h2 style="margin: 0.0px 0.0px 12.0px 0.0px; line-height: 34.6px; font: 28.8px Georgia; color: #141310; -webkit-text-stroke: #141310"><span class="s3">Poser votre question</span></h2>
+<p class="p31"><span class="s3">Posez votre question par écrit, avec précision. Incluez le contexte nécessaire mais formulez une seule question principale. Je note l'heure à laquelle je lis votre message.</span></p>
+<p class="p32"><span class="s3"><i></i></span><br></p>
+<p class="p17"><span class="s3">Délai de réponse : 48 à 72 heures</span></p>
+<p class="p32"><span class="s3"><i></i></span><br></p>
+<p class="p17"><span class="s3">Français · English</span></p>
+<p class="p32"><span class="s3"><i></i></span><br></p>
+<p class="p17"><span class="s3">contact@horary-astrology.com</span></p>
+<p class="p33"><span class="s3">VOTRE NOM</span></p>
+<p class="p33"><span class="s3">EMAIL</span></p>
+<p class="p33"><span class="s3">FORMULE</span></p>
+<p class="p34"><span class="s13"><span class="Apple-converted-space">          </span></span><span class="s3">Question simple — 35 €</span></p>
+<p class="p34"><span class="s13"><span class="Apple-converted-space">          </span></span><span class="s3">Consultation complète — 65 €</span></p>
+<p class="p34"><span class="s13"><span class="Apple-converted-space">          </span></span><span class="s3">Objet perdu — 25 €</span></p>
+<p class="p35"><span class="s7"><span class="Apple-converted-space">        </span></span><span class="s6"><span class="Apple-converted-space"> </span></span></p>
+<p class="p33"><span class="s3">VOTRE QUESTION</span></p>
+<p class="p36"><span class="s14">ENVOYER MA QUESTION</span><span class="s15"><span class="Apple-converted-space"> </span></span></p>
+<p class="p37"><span class="s3">HORARY </span><span class="s16">◈</span><span class="s3"> ASTROLOGY</span></p>
+<p class="p2"><span class="s3">MÉTHODE</span></p>
+<p class="p2"><span class="s3">TARIFS</span></p>
+<p class="p2"><span class="s3">CONTACT</span></p>
+<p class="p2"><span class="s3">© 2025 · Méthode Lilly–Frawley</span></p>
 </body>
 </html>
