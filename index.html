@@ -378,9 +378,10 @@ footer{padding:3rem 4rem;border-top:0.5px solid var(--border);display:flex;justi
       <div class="contact-detail"><i class="ti ti-mail"></i><span>contact@horary-astrology.com</span></div>
     </div>
     <div>
-      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="merci.html">
-        <input type="hidden" name="form-name" value="contact">
-        <p style="display:none"><input name="bot-field"></p>
+      <form name="contact" method="POST" action="https://formspree.io/f/mdavglor">
+        <input type="hidden" name="_next" value="merci.html">
+        <input type="hidden" name="_subject" value="Nouvelle question horary">
+        <p style="display:none"><input name="_honeypot"></p>
         <div class="form-group"><label id="fl-name">Votre nom</label><input type="text" name="nom" placeholder="Marie Dupont" required></div>
         <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="marie@email.com" required></div>
         <div class="form-group">
